@@ -6,8 +6,7 @@ Uses:
 	ClipD.R 
 	VBA.Module:basRClipboardDeamon
 
-Details
---------------------------------------------------------------
+## Details
 Communicating between applications over the clipboard has many disadvantages, but can be very fast. 
 The user should allway understand that using the clipboard durring application data transfer could break things.
 The client and server service should be written in such a maner to identify when information is comming 
@@ -21,15 +20,16 @@ We are using a UUID for this protocol of "'cc323f83-592b-4f20-a0d4-48b7c5c51a30'
 seperated by periods'.' to the clipboard. The from and to are unique identifier for the running application usually 
 just the PID. MS Excel can have many workbooks open under the same PID so we append the workbook name to it's PID with spaces and periods removed.
 
-Our Custom Communication protocol:
---------------------------------------------------------------
+## Our Custom Communication protocol:
 Nomenclature:
-	clip_d UUDI.Message.From.To
-Nomenclature Descrption:
-	"UUID for SFSSCC"."Message For Actions To Be Performed With Incoming Data"."From's PID"."To PID"
 
-Example:
---------------------------------------------------------------
+	* clip_d UUDI.Message.From.To
+	
+Nomenclature Descrption:
+
+	* "UUID for SFSSCC"."Message For Actions To Be Performed With Incoming Data"."From's PID"."To PID"
+
+## Example:
 Excell needs the R scrip to process data in the clipboard and return the results to the clipboard
 
 	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Att.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R
@@ -43,25 +43,20 @@ Excell needs the R scrip to process data in the clipboard and return the results
 	[Results written to clipboard by R-Server, Excel reads data from clipboard and replys]
 	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R_Client.Connect
 
-Messages:
-Att = Give me your full attention (and PID/Name)
-Ack = Acknowledged 
-Post(NamedProcess) =  I'm about to write to the clipboard, process data by named procedure
-Post = I'm about to write to the clipboard
+### Messages:
+* Att = Give me your full attention (and PID/Name)
+* Ack = Acknowledged 
+* Post(NamedProcess) =  I'm about to write to the clipboard, process data by named procedure
+* Post = I'm about to write to the clipboard
 
 
 UUID for SFSSCC.R PID.Action
 cc323f83-592b-4f20-a0d4-48b7c5c51a30
 
-
-We will be using unique application/vba process name with
-==============================================================
-In R we get this sessions PID with:
---------------------------------------------------------------
+## In R we get this sessions PID with:
 	Sys.getpid()
 
-In Excel we get this sessions PID and workbook name with:
---------------------------------------------------------------
+## In Excel we get this sessions PID and workbook name with:
 	Option Explicit
 
 	Private Declare Function GetCurrentProcessId Lib "kernel32" () As LongPtr
@@ -79,26 +74,21 @@ In Excel we get this sessions PID and workbook name with:
 			)
 	End Function
 
-In R we can readfrom and write to the clipboard using
---------------------------------------------------------------
+## In R we can readfrom and write to the clipboard using
 	library(clipr)
 	read_clip_tbl()
 	read_clip()
 	write_clip()
 
-Generating UUIDs, and GUIDs
-==============================================================
-We will be using UUIDs for unique identifiers, with hyphens without braces.
---------------------------------------------------------------
+# Generating UUIDs, and GUIDs
+ We will be using a UUID to unsure that we know what's in the clipboard is for communication. We will be using UUIDs for unique identifiers, with hyphens without braces.
 
-In R we can use
---------------------------------------------------------------
+## In R we can use
 	require(uuid)
 	UUIDgenerate(FALSE) # Random based UUID 
 	UUIDgenerate(TRUE) # Time based UUID
---------------------------------------------------------------
-In VBA we will use this function:
---------------------------------------------------------------
+
+## In VBA we will use this function:
 	Public Function CreateGUIDv4( _
 	    Optional fIncludeBraces As Boolean = False, _
 	    Optional fIncludeHyphens As Boolean = True) _
@@ -145,31 +135,27 @@ In VBA we will use this function:
 	    strHyphen & Mid(CreateGUIDv4, 21, 12) & strRightBrace
 	End Function
 
-in SQL use the function NewID()
---------------------------------------------------------------
+## in SQL use the function NewID()
 	INSERT INTO table_name (ID,Column1,Column2,Column3)
 	VALUES (NewID(),value1,value2,value3)
 
 
-Thoughs on Namespace model 
-==============================================================
+## Thoughs on Namespace model 
 For using the clipboard as a signal to perform work between MS Office products and R, 
 this works best as a server client relationship. Each application will be continually or occaisionally 
-checking the clipboard for specific values, 
+checking the clipboard for specific values.
 
 We are essentially building an api that uses the clipboard as the data stream using a request-response messaging paggern
-For verb noun adjective apis, read https://www.wordsapi.com/#try free tier is 2,500 calls daily
+For verb noun adjective can be found from the [wordsapi.com](https://www.wordsapi.com/#try) free tier is 2,500 calls daily.
 
 We could potentially write clients that understood human language commands using 'noun, preposition, verb, preposition, adjective' like
 	client.application.r.is.ready.to.recieve
 	server.application.msexcell.is.ready.to.send
 but that's probably overkill, we are better served by sticking to simpler models like the REST verbs of:
 	GET,PUT,POST,DELETE
-Read:
-	https://stackoverflow.com/questions/2001773/understanding-rest-verbs-error-codes-and-authentication/2022938#2022938
+Read from stack overflow, [Understanding REST: Verbs, error codes, and authentication](https://stackoverflow.com/questions/2001773/understanding-rest-verbs-error-codes-and-authentication/2022938#2022938)
 
-Inspiration
-==================
+# Inspiration
 Examples and blog posts on how to use the Clipboard to comunicate with R:
 	[A million ways to connect R and Excel](https://www.r-bloggers.com/a-million-ways-to-connect-r-and-excel/)
 	[Copying Data from Excel to R and Back](http://alandgraf.blogspot.com/2013/02/copying-data-from-excel-to-r-and-back_24.html)

@@ -1,54 +1,48 @@
 # R Clipboard Daemon
-Project Name:
 ==============================================================================
 	ClipD.R (R Clipboard Deamon) 
-		- using our custom Simple Fairly Safe Server Client Clipboard Communication Protocal 
+		- using a custom simple fairly safe server client clipboard communication protocol.
 		(SFSSCC = cc323f83-592b-4f20-a0d4-48b7c5c51a30)
-
-by jeremy.gerdes@navy.mil and willam.young5@navy.mil
-
-Requires:
-	R-clipboard-processing-service.R 
+------------------------------------------------------------------------------
+Uses:
+	ClipD.R 
 	VBA.Module:basRClipboardDeamon
-==============================================================================
-(If we ever get to packageing this thing it could be called clip_d)
 
+==============================================================================
 Communicating between applications over the clipboard has many disadvantages, but can be very fast. 
 The user should allway understand that using the clipboard durring application data transfer could break things.
 The client and server service should be written in such a maner to identify when information is comming 
-to each and take action on the clip boar as fast as possible to minimize user interaction with the clipboard.
+to each and take action on the clipboard as fast as possible to minimize user interaction with the clipboard.
 
 This method should only be used over writing to the file system is speed is the priority, and communications via 
-sockets/shared memory is prevented due to technology/security constrainsts.
-
-
-Pre-requisits:
-A predefined common UUID to write into the clipboard of the server application and the client application must exist
-The Client and Server will be waiting for communications when needed.
+sockets/shared memory is prevented due to platform, technology, or security constrainsts.
 
 Protocol:
-We are using a UUID for this protocol of "cc323f83-592b-4f20-a0d4-48b7c5c51a30" followed by the message, from, to all 
+We are using a UUID for this protocol of "'cc323f83-592b-4f20-a0d4-48b7c5c51a30' followed by the 'message', 'from', 'to' all 
 seperated by periods'.' to the clipboard. The from and to are unique identifier for the running application usually 
-just the PID. Access can have many workbooks open under the same PID so we append the workbook name with spaces and periods removed.
+just the PID. MS Excel can have many workbooks open under the same PID so we append the workbook name to it's PID with spaces and periods removed.
 
-Nomenclature is:
-	SFSSC Identifier.Message.From.To
-Nomenclature Descrption is:
-	UUID for SFSSCC.Message For Actions To Be Performed With Incoming Data.From's PID.To PID (Any R serving script)
+Our Custom Communication protocol:
 --------------------------------------------------------------
+Nomenclature:
+	clip_d UUDI.Message.From.To
+Nomenclature Descrption:
+	"UUID for SFSSCC"."Message For Actions To Be Performed With Incoming Data"."From's PID"."To PID"
+
 Example:
-Excell needs the R scrip to process data in the clipboard and return the results to the clipboard
 --------------------------------------------------------------
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Att.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Post(NamedProcess).11108RCTQSMonteCarloThroughputTool_LPxlsb.112
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
-[Data written to clipboard by excel client, R-Server with PID 112 reads the data and replys back with]
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Post.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.11108RCTQSMonteCarloThroughputTool_LPxlsb.112
-[Results written to clipboard by R-Server, Excel reads data from clipboard and replys]
-cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R_Client.Connect
+Excell needs the R scrip to process data in the clipboard and return the results to the clipboard
+
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Att.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Post(NamedProcess).11108RCTQSMonteCarloThroughputTool_LPxlsb.112
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
+	[Data written to clipboard by excel client, R-Server with PID 112 reads the data and replys back with]
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Post.112.11108RCTQSMonteCarloThroughputTool_LPxlsb
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.11108RCTQSMonteCarloThroughputTool_LPxlsb.112
+	[Results written to clipboard by R-Server, Excel reads data from clipboard and replys]
+	cc323f83-592b-4f20-a0d4-48b7c5c51a30.Ack.11108RCTQSMonteCarloThroughputTool_LPxlsb.any_R_Client.Connect
 
 Messages:
 Att = Give me your full attention (and PID/Name)
@@ -67,7 +61,6 @@ In R we get this sessions PID with:
 --------------------------------------------------------------
 	Sys.getpid()
 
---------------------------------------------------------------
 In Excel we get this sessions PID and workbook name with:
 --------------------------------------------------------------
 Option Explicit
@@ -89,10 +82,10 @@ Also read:
 	http://alandgraf.blogspot.com/2013/02/copying-data-from-excel-to-r-and-back_24.html
 	https://www.johndcook.com/blog/r_excel_clipboard/
 	https://www.r-bloggers.com/copying-data-from-excel-to-r-and-back/
+
+In R we can readfrom and write to the clipboard using
 --------------------------------------------------------------
-In R we read and write using
---------------------------------------------------------------
-require(clipr)
+library(clipr)
 read_clip_tbl()
 read_clip()
 write_clip()

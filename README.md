@@ -71,7 +71,12 @@ In Excel we get this sessions PID and workbook name with:
 	End Function
 
 	Public Function ThisWorkbookPidAndName() As String
-	    ThisWorkbookPidAndName = ThisWorkbookPid & Replace(Replace(ThisWorkbook.name, " ", vbNullString), ".", vbNullString)
+	    ThisWorkbookPidAndName = _
+			ThisWorkbookPid & Replace( _
+				Replace( _
+					ThisWorkbook.name, " ", vbNullString _
+				), ".", vbNullString
+			)
 	End Function
 
 In R we can readfrom and write to the clipboard using
@@ -101,8 +106,16 @@ In VBA we will use this function:
 	    'Modified by jeremy.gerdes@navy.mil from https://stackoverflow.com/a/46474125
 	    'This creates a V4 (pseudo-random number generated) GUID/UUID per RFC 4122 section 4.4
 	    'Alternatively we can use this formula:
-	    '=CONCATENATE(DEC2HEX(RANDBETWEEN(0,4294967295),8),"-",DEC2HEX(RANDBETWEEN(0,65535),4),"-",DEC2HEX(RANDBETWEEN(16384,20479),4),"-",DEC2HEX(RANDBETWEEN(32768,49151),4),"-",DEC2HEX(RANDBETWEEN(0,65535),4),DEC2HEX(RANDBETWEEN(0,4294967295),8))
-	    Do While Len(CreateGUIDv4) < 32
+	    '=CONCATENATE(
+			'DEC2HEX(RANDBETWEEN(0,4294967295),8),"-",
+			'DEC2HEX(RANDBETWEEN(0,65535),4),"-",
+			'DEC2HEX(RANDBETWEEN(16384,20479),4),"-",
+			'DEC2HEX(RANDBETWEEN(32768,49151),4),"-",
+			'DEC2HEX(RANDBETWEEN(0,65535),4),
+			'DEC2HEX(RANDBETWEEN(0,4294967295),8)
+		')
+	    
+		Do While Len(CreateGUIDv4) < 32
 		If Len(CreateGUIDv4) = 16 Then
 		    '17th character holds version information
 		    CreateGUIDv4 = CreateGUIDv4 & Hex$(8 + CInt(Rnd * 3))

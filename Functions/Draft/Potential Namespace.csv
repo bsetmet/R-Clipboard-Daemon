@@ -1,0 +1,20 @@
+GUID,Name,PartOfSpeech,Details
+914fb66c-07a2-4fc8-8a38-838f5c7df809,ready,adjective,Action
+5ec423a1-dc9f-444f-9ed7-2d46470dda23,application,noun,
+d4dfed3e-9b35-475f-b7bb-12c2b3f813f0,client,noun,Application
+82f7260a-73b7-473c-ae11-94160d4ad6f4,data,noun,Information
+963277c0-5def-4140-b688-80a687f0f57b,error,noun,Information
+c4f5afc6-1c39-4307-87d0-7021537aae04,msaccess,noun,Server
+88385698-29e3-41bf-a8c5-93302c8a8d71,excel,noun,Application
+d0dae1c9-e7e1-46e4-acc1-de169a6dadc1,r,noun,Application
+4e0fc682-eb00-4d95-bb39-bc4ac250295a,server,noun,Application
+e2a6d078-42e2-47cf-bbf4-9f35de847ddc,success,noun,Result
+ab8f6b36-139f-422a-a42d-04a33533a8ce,is,preposition,
+c2ea8d42-b58b-46bf-a87a-0c9d7d735d16,to,preposition,
+fdca9126-8e45-4ef5-93e8-5e21a7713074,with,preposition,
+3dfd3032-75b3-46a7-98f1-98652a8d2ddb,fail,verb,Result
+ff957c8f-ef51-46e0-b4b3-8b31e6d17c15,quit,verb,"Action, I will, or You Should?"
+38248447-c399-4bae-9a91-b50a6f8d6b58,acknowledge,verb,
+fc0816c8-ca46-4d17-9e4f-50d9ca3ccaeb,send,verb,Action
+91038ca0-7252-4d01-a7d8-e2568133b173,receive,verb,Action
+fb6c3f6f-daa6-4f61-995e-f868747b9911,do,preposition,

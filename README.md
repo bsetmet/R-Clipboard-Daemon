@@ -61,10 +61,8 @@ UUID for SFSSCC.R PID.Action
 cc323f83-592b-4f20-a0d4-48b7c5c51a30
 
 
-==============================================================
 We will be using unique application/vba process name with
 ==============================================================
---------------------------------------------------------------
 In R we get this sessions PID with:
 --------------------------------------------------------------
 	Sys.getpid()
@@ -84,7 +82,6 @@ Public Function ThisWorkbookPidAndName() As String
     ThisWorkbookPidAndName = ThisWorkbookPid & Replace(Replace(ThisWorkbook.name, " ", vbNullString), ".", vbNullString)
 End Function
 
-==============================================================
 We will be using UUIDs for unique identifiers, with hyphens without braces.
 ==============================================================
 Also read:
@@ -100,7 +97,7 @@ read_clip_tbl()
 read_clip()
 write_clip()
 
---------------------------------------------------------------
+==============================================================
 Generating UUIDs, and GUIDs
 --------------------------------------------------------------
 In R we can use
@@ -148,13 +145,13 @@ As String
     strHyphen & Mid(CreateGUIDv4, 17, 4) & _
     strHyphen & Mid(CreateGUIDv4, 21, 12) & strRightBrace
 End Function
---------------------------------------------------------------
+
 in SQL use the function NewID()
 --------------------------------------------------------------
 INSERT INTO table_name (ID,Column1,Column2,Column3)
 VALUES (NewID(),value1,value2,value3)
 
-==============================================================
+
 Thoughs on Namespace model 
 ==============================================================
 For using the clipboard as a signal to perform work between MS Office products and R, 

@@ -155,8 +155,10 @@ but that's probably overkill, we are better served by sticking to simpler models
 Read:
 	https://stackoverflow.com/questions/2001773/understanding-rest-verbs-error-codes-and-authentication/2022938#2022938
 
-Also read external examples of using the Clipboard to comunicate with R:
-	[a](https://www.r-bloggers.com/a-million-ways-to-connect-r-and-excel/)
-	[a](http://alandgraf.blogspot.com/2013/02/copying-data-from-excel-to-r-and-back_24.html)
-	[a](https://www.johndcook.com/blog/r_excel_clipboard/)
+Inspiration
+==================
+Examples and blog posts on how to use the Clipboard to comunicate with R:
+	[A million ways to connect R and Excel](https://www.r-bloggers.com/a-million-ways-to-connect-r-and-excel/)
+	[Copying Data from Excel to R and Back](http://alandgraf.blogspot.com/2013/02/copying-data-from-excel-to-r-and-back_24.html)
+	[Moving data between R and Excel via the clipboard](https://www.johndcook.com/blog/r_excel_clipboard/)
 	[a](https://www.r-bloggers.com/copying-data-from-excel-to-r-and-back/)

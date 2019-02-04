@@ -5,6 +5,9 @@
 Uses:
 	ClipD.R 
 	VBA.Module:basRClipboardDeamon
+	
+## THIS IS A WORK IN PROGRESS
+Currently nothing here works!
 
 ## Details
 Communicating between applications over the clipboard has many disadvantages, but can be very fast. 
